@@ -3,45 +3,38 @@ package pe.com.grupomoran.designsystem
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import pe.com.grupomoran.designsystem.ui.theme.DesignsystemTheme
+import pe.com.grupomoran.designsystem.components.organisms.BaseLoginScreen
+import pe.com.grupomoran.designsystem.ui.theme.GMDesignSystemTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            DesignsystemTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+            GMDesignSystemTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    BaseLoginScreen(
+                        logoRes = android.R.drawable.ic_menu_gallery,
+                        titleLine1 = "GRUPO",
+                        titleLine2 = "MORAN",
+                        subtitle = "SISTEMA DE DISEÑO",
+                        usernameValue = "",
+                        onUsernameChange = {},
+                        passwordValue = "",
+                        onPasswordChange = {},
+                        isLoading = false,
+                        versionText = "v1.0.0",
+                        deviceIdText = "ID: DEFAULT",
+                        onLoginClick = {}
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DesignsystemTheme {
-        Greeting("Android")
     }
 }

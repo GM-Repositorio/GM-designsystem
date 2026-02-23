@@ -46,10 +46,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import pe.com.grupomoran.designsystem.ui.theme.DesignsystemTheme
 import java.io.File
 import androidx.compose.ui.graphics.Color
-import kotlinx.coroutines.launch
+import pe.com.grupomoran.designsystem.ui.theme.GMDesignSystemTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,7 +115,7 @@ fun PreviewGMDashBoardDrawer() {
         GMMenuOption(id = "3", label = "Cerrar Sesión", iconName = "exit.png")
     )
 
-    DesignsystemTheme { // Asegúrate de que use el tema de tu librería
+    GMDesignSystemTheme { // Asegúrate de que use el tema de tu librería
         // 2. Forzamos el estado 'Open' para que la Preview siempre muestre el menú
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Open)
 
