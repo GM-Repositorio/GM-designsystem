@@ -2,5 +2,3 @@ jdk:
   - openjdk17
 before_install:
   - chmod +x gradlew
-install:
-  - ./gradlew :app:publishReleasePublicationToMavenLocal -Dmaven.repo.local=$HOME/.m2/repository
