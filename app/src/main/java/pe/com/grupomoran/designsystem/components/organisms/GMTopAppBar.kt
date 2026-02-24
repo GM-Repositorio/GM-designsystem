@@ -219,30 +219,3 @@ fun GMSearchTopAppBar(
         modifier = modifier
     )
 }
-
-// --- PREVIEWS ---
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
-@Composable
-fun PreviewGMTopAppBars() {
-    GMDesignSystemTheme {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text("Main TopAppBar (Con Icono)", style = MaterialTheme.typography.labelLarge)
-            GMMainTopAppBar(
-                title = "Reparto",
-                titleIcon = Icons.Default.Notifications,
-                onMenuClick = {}
-            )
-
-            Text("Action TopAppBar (Normal)", style = MaterialTheme.typography.labelLarge)
-            GMActionTopAppBar(
-                title = "Detalle Pedido",
-                onBackClick = {}
-            )
-        }
-    }
-}

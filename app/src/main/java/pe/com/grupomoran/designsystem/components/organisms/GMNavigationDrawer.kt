@@ -64,10 +64,10 @@ data class GMNavigationItem(
  */
 @Composable
 fun rememberGMIconPainter(icon: Any): Painter {
-    val context = LocalContext.current
     return when (icon) {
         is ImageVector -> rememberVectorPainter(icon)
         is Bitmap -> BitmapPainter(icon.asImageBitmap())
+        is Int -> painterResource(id = icon)
         is Painter -> icon
         is String -> {
             remember(icon) {
@@ -130,7 +130,7 @@ fun GMModalNavigationDrawer(
                                 contentDescription = null,
                                 modifier = Modifier.size(24.dp),
                                 // Mantenemos colores originales para Bitmaps e Imágenes externas
-                                tint = if (item.icon is String || item.icon is Bitmap) Color.Unspecified else LocalContentColor.current
+                                tint = if (item.icon is String || item.icon is Bitmap || item.icon is Int) Color.Unspecified else LocalContentColor.current
                             ) 
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
@@ -153,26 +153,30 @@ fun GMModalNavigationDrawer(
  * Header por defecto para el Drawer con el Logo del Grupo Morán.
  */
 @Composable
-fun GMDefaultDrawerHeader() {
+fun GMDefaultDrawerHeader(
+    title: String = "SISTEMA DE DISEÑO",
+    subtitle: String = "Grupo Morán",
+    icon: Any = R.drawable.logojmv2
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(24.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logojmv2),
-            contentDescription = "Logo Grupo Morán",
+            painter = rememberGMIconPainter(icon),
+            contentDescription = null,
             modifier = Modifier.height(48.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "SISTEMA DE DISEÑO",
+            text = title,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.ExtraBold
         )
         Text(
-            text = "Grupo Morán",
+            text = subtitle,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
