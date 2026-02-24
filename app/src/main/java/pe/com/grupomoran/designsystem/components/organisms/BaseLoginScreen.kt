@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -20,8 +22,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,6 +52,8 @@ fun BaseLoginScreen (
 
     contentOverlay: @Composable () -> Unit = {}
 ){
+    val focusManager = LocalFocusManager.current
+
     Box(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
     Column(
         modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter),
@@ -97,7 +104,12 @@ fun BaseLoginScreen (
             onValueChange = onUsernameChange,
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("Usuario") },
-            enabled = !isLoading
+            enabled = !isLoading,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(
+                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+            ),
+            singleLine = true
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -108,7 +120,17 @@ fun BaseLoginScreen (
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
-            enabled = !isLoading
+            enabled = !isLoading,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                    if (usernameValue.isNotBlank() && passwordValue.isNotBlank()) {
+                        onLoginClick()
+                    }
+                }
+            ),
+            singleLine = true
         )
 
         Spacer(modifier = Modifier.height(16.dp))

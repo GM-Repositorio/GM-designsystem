@@ -18,7 +18,7 @@ Añade la dependencia a tu `build.gradle.kts` (app):
 
 ```kotlin
 dependencies {
-    implementation("com.github.GM-Repositorio:designsystem:1.0.4")
+    implementation("com.github.GM-Repositorio:designsystem:1.0.5")
 }
 ```
 
@@ -88,6 +88,35 @@ Column {
         selectedId = selectedId,
         onOptionSelected = { selectedId = it.id }
     )
+}
+```
+
+### 📱 Estructura con Menú Lateral (Drawer)
+Combina el `GMModalNavigationDrawer` con `GMMainTopAppBar` para la estructura principal de tu app.
+
+```kotlin
+val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+val scope = rememberCoroutineScope()
+
+val menuItems = listOf(
+    GMNavigationItem("1", "Inicio", Icons.Default.Home, { /* navegación */ }, isSelected = true),
+    GMNavigationItem("2", "Entregas", Icons.Default.LocalShipping, { /* navegación */ })
+)
+
+GMModalNavigationDrawer(
+    drawerState = drawerState,
+    items = menuItems
+) {
+    Scaffold(
+        topBar = {
+            GMMainTopAppBar(
+                title = "Grupo Morán",
+                onMenuClick = { scope.launch { drawerState.open() } }
+            )
+        }
+    ) { padding ->
+        // Tu contenido aquí
+    }
 }
 ```
 
