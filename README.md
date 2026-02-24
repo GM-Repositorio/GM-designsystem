@@ -18,7 +18,7 @@ Añade la dependencia a tu `build.gradle.kts` (app):
 
 ```kotlin
 dependencies {
-    implementation("com.github.GM-Repositorio:designsystem:1.0.3")
+    implementation("com.github.GM-Repositorio:designsystem:1.0.4")
 }
 ```
 
