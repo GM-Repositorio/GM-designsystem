@@ -30,15 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
 @Composable
-fun GMLoadingDialog (
-
-    isLoading : Boolean,
-    logoPainter : Painter,
-    mensaje : String = "Cargando...",
+fun GMLoadingDialog(
+    isLoading: Boolean,
+    logoPainter: Painter,
+    mensaje: String = "Cargando...",
 ) {
-    if ( isLoading ) {
+    if (isLoading) {
         val infiniteTransition = rememberInfiniteTransition(label = "LoadingAnimation")
-        val alpha by infiniteTransition.animateFloat(
+        val alphaAnim by infiniteTransition.animateFloat(
             initialValue = 0.4f,
             targetValue = 1f,
             animationSpec = infiniteRepeatable(
@@ -47,8 +46,8 @@ fun GMLoadingDialog (
             ),
             label = "AlphaAnimation"
         )
-        Dialog(onDismissRequest = { }) {
-            Surface (
+            Dialog(onDismissRequest = { }) {
+            Surface(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(24.dp),
@@ -56,16 +55,17 @@ fun GMLoadingDialog (
                 color = MaterialTheme.colorScheme.surface,
                 tonalElevation = 6.dp,
             ) {
-                Row (
+                Row(
                     modifier = Modifier.padding(24.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                ){
+                ) {
                     Image(
                         painter = logoPainter,
                         contentDescription = "Loading",
                         modifier = Modifier
                             .size(40.dp)
-                            .graphicsLayer { this.alpha = alpha }
+                            // IMPORTANTE: Aquí aplicas el valor animado
+                            .graphicsLayer(alpha = alphaAnim)
                     )
                     Spacer(modifier = Modifier.width(20.dp))
                     Text(text = mensaje, style = MaterialTheme.typography.bodyLarge)
