@@ -47,30 +47,29 @@ fun GMLoadingDialog (
             ),
             label = "AlphaAnimation"
         )
-    }
-
-    Dialog(onDismissRequest = { }) {
-        Surface (
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            shape = RoundedCornerShape(12.dp),
-            color = MaterialTheme.colorScheme.surface,
-            tonalElevation = 6.dp,
-        ) {
-            Row (
-                modifier = Modifier.padding(24.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ){
-                Image(
-                    painter = logoPainter,
-                    contentDescription = "Loading",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .graphicsLayer { this.alpha = alpha }
-                )
-                Spacer(modifier = Modifier.width(20.dp))
-                Text(text = mensaje, style = MaterialTheme.typography.bodyLarge)
+        Dialog(onDismissRequest = { }) {
+            Surface (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.surface,
+                tonalElevation = 6.dp,
+            ) {
+                Row (
+                    modifier = Modifier.padding(24.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ){
+                    Image(
+                        painter = logoPainter,
+                        contentDescription = "Loading",
+                        modifier = Modifier
+                            .size(40.dp)
+                            .graphicsLayer { this.alpha = alpha }
+                    )
+                    Spacer(modifier = Modifier.width(20.dp))
+                    Text(text = mensaje, style = MaterialTheme.typography.bodyLarge)
+                }
             }
         }
     }
