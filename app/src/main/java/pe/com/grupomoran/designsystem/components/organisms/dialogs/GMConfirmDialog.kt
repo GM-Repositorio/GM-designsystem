@@ -29,20 +29,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun GMConfirmDialog (
+fun GMConfirmDialog(
     title: String,
     text: String,
-
     onDismissRequest: () -> Unit,
     onConfirm: () -> Unit,
     confirmText: String = "Aceptar",
-    dismissText: String = "Cancelar",
-
+    dismissText: String? = "Cancelar", // Cambiado a opcional
     icon: ImageVector? = null,
     iconTint: Color = MaterialTheme.colorScheme.primary
-){
+) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
+        // Evita que el diálogo se cierre al tocar fuera o presionar atrás
+        properties = androidx.compose.ui.window.DialogProperties(
+            dismissOnBackPress = dismissText.isNullOrBlank().not(),
+            dismissOnClickOutside = dismissText.isNullOrBlank().not()
+        ),
         shape = RoundedCornerShape(12.dp),
         containerColor = MaterialTheme.colorScheme.surface,
         icon = icon?.let {
@@ -76,34 +79,37 @@ fun GMConfirmDialog (
             )
         },
         confirmButton = {
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ){
-                OutlinedButton(
-                    onClick = onDismissRequest,
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(46.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(1.dp, Color.LightGray)
-                ) {
-                    Text(
-                        text = dismissText,
-                        color = Color.Gray,
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontWeight = FontWeight.Bold
-                        ),
-                        textAlign = TextAlign.Center
-                    )
+            ) {
+                // CONDICIÓN: Solo aparece si dismissText no es nulo ni vacío
+                if (!dismissText.isNullOrBlank()) {
+                    OutlinedButton(
+                        onClick = onDismissRequest,
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(46.dp),
+                        shape = RoundedCornerShape(8.dp),
+                        border = BorderStroke(1.dp, Color.LightGray)
+                    ) {
+                        Text(
+                            text = dismissText,
+                            color = Color.Gray,
+                            style = MaterialTheme.typography.labelLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            ),
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
-                
+
                 Button(
                     onClick = onConfirm,
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(1f) // Se expandirá solo si el otro botón no existe
                         .height(46.dp),
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -120,7 +126,6 @@ fun GMConfirmDialog (
                 }
             }
         }
-
     )
 }
 
@@ -135,7 +140,6 @@ fun PreviewGMConfirmDialog() {
                 onConfirm = {},
                 onDismissRequest = {},
                 confirmText = "Aceptar",
-                dismissText = "Cancelar",
                 icon = Icons.Default.CheckCircle,
                 iconTint = Color(0xFF2979FF) // Azul institucional
             )

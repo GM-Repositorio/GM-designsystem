@@ -1,5 +1,6 @@
 package pe.com.grupomoran.designsystem.components.organisms.dialogs
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -29,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun GMLoadingDialog(
     isLoading: Boolean,
@@ -72,30 +74,5 @@ fun GMLoadingDialog(
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true, name = "Loading con Pulso - AppReparto")
-@Composable
-fun PreviewGMLoadingReparto() {
-    MaterialTheme {
-        GMLoadingDialog(
-            isLoading = true,
-            // Reemplaza 'logo' por el nombre real de tu archivo en drawable
-            logoPainter = painterResource(id = pe.com.grupomoran.designsystem.R.drawable.logojmv2),
-            mensaje = "Procesando reparto..."
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "Loading con Pulso - AppVentas")
-@Composable
-fun PreviewGMLoadingVentas() {
-    MaterialTheme {
-        GMLoadingDialog(
-            isLoading = true,
-            logoPainter = painterResource(id = pe.com.grupomoran.designsystem.R.drawable.logojmv2),
-            mensaje = "Sincronizando ventas..."
-        )
     }
 }
