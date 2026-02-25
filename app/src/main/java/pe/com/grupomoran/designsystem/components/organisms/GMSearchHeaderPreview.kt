@@ -81,13 +81,3 @@ fun GMExtendedHeaderPreview() {
         }
     }
 }
-
-@Preview(showBackground = true, name = "Header con Iconos")
-@Composable
-fun PreviewExtendedHeader() {
-    GMDesignSystemTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            GMExtendedHeaderPreview()
-        }
-    }
-}

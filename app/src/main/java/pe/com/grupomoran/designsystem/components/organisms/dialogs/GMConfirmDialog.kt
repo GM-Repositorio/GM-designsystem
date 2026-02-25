@@ -128,21 +128,3 @@ fun GMConfirmDialog(
         }
     )
 }
-
-@Preview(showBackground = true, name = "Confirmación Estilo Uber")
-@Composable
-fun PreviewGMConfirmDialog() {
-    MaterialTheme {
-        Column(modifier = Modifier.padding(16.dp)) {
-            GMConfirmDialog(
-                title = "Confirmar Pedido",
-                text = "¿Estás seguro de que deseas enviar este pedido de reparto ahora?",
-                onConfirm = {},
-                onDismissRequest = {},
-                confirmText = "Aceptar",
-                icon = Icons.Default.CheckCircle,
-                iconTint = Color(0xFF2979FF) // Azul institucional
-            )
-        }
-    }
-}

@@ -96,12 +96,14 @@ fun GMModalNavigationDrawer(
     drawerState: DrawerState,
     items: List<GMNavigationItem>,
     modifier: Modifier = Modifier,
+    gesturesEnabled: Boolean = true,
     headerContent: @Composable () -> Unit = { GMDefaultDrawerHeader() },
     content: @Composable () -> Unit
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         modifier = modifier,
+        gesturesEnabled = gesturesEnabled,
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier
@@ -180,26 +182,5 @@ fun GMDefaultDrawerHeader(
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewGMNavigationDrawer() {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Open)
-    val items = listOf(
-        GMNavigationItem("1", "Inicio", Icons.Default.Home, {}, isSelected = true),
-        GMNavigationItem("2", "Pedidos", Icons.Default.ShoppingCart, {}),
-        GMNavigationItem("3", "Perfil", Icons.Default.Person, {}),
-        GMNavigationItem("4", "Configuración", Icons.Default.Settings, {})
-    )
-
-    GMDesignSystemTheme {
-        GMModalNavigationDrawer(
-            drawerState = drawerState,
-            items = items
-        ) {
-            Text("Contenido de la pantalla", modifier = Modifier.padding(16.dp))
-        }
     }
 }

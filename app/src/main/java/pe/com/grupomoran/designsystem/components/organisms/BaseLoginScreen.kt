@@ -158,25 +158,3 @@ fun BaseLoginScreen (
     contentOverlay()
 }
 }
-
-@Preview(showBackground = true, name = "Login Grupo Moran")
-@Composable
-fun PreviewLoginMoran() {
-    // Usamos un MaterialTheme envolvente para que los colores se apliquen correctamente
-    MaterialTheme {
-        BaseLoginScreen(
-            logoRes = R.drawable.ic_menu_gallery, // Usamos uno de Android para el ejemplo
-            titleLine1 = "GRUPO",
-            titleLine2 = "MORAN",
-            subtitle = "REPARTO",
-            usernameValue = "Usuario123",
-            onUsernameChange = {},
-            passwordValue = "123456",
-            onPasswordChange = {},
-            isLoading = false,
-            versionText = "v1.0.24",
-            deviceIdText = "ID: 8a7b6c5d",
-            onLoginClick = {}
-        )
-    }
-}

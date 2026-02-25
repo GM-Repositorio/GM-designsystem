@@ -106,29 +106,3 @@ fun GMStatusDialog(
         }
     )
 }
-
-@Preview(name = "Estado: Éxito (Ventas)")
-@Composable
-fun PreviewSuccess() {
-    GMStatusDialog(
-        title = "Venta Exitosa",
-        text = "El pedido se ha sincronizado correctamente.",
-        onConfirm = {},
-        icon = Icons.Default.CheckCircle,
-        statusColor = Color(0xFF24851A) // Azul Moran
-    )
-}
-
-@Preview(name = "Estado: Error (Reparto)")
-@Composable
-fun PreviewError() {
-    GMStatusDialog(
-        title = "Error de Carga",
-        text = "No se pudieron obtener los datos de la ruta.",
-        onConfirm = {},
-        onDismissRequest = {},
-        confirmText = "Reintentar",
-        icon = Icons.Default.Warning,
-        statusColor = Color(0xFFF44336) // Rojo Alerta
-    )
-}

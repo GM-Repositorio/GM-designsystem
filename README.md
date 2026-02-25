@@ -105,7 +105,8 @@ val menuItems = listOf(
 
 GMModalNavigationDrawer(
     drawerState = drawerState,
-    items = menuItems
+    items = menuItems,
+    gesturesEnabled = true // Opcional: true por defecto, permite deshabilitar gestos
 ) {
     Scaffold(
         topBar = {
