@@ -96,7 +96,7 @@ fun GMModalNavigationDrawer(
     drawerState: DrawerState,
     items: List<GMNavigationItem>,
     modifier: Modifier = Modifier,
-    gesturesEnabled: Boolean = true,
+    gesturesEnabled: Boolean = false,
     headerContent: @Composable () -> Unit = { GMDefaultDrawerHeader() },
     content: @Composable () -> Unit
 ) {
