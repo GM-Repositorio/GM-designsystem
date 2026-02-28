@@ -64,7 +64,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "pe.com.grupomoran" // Tu dominio
                 artifactId = "designsystem"     // Nombre de la librería
-                version = "1.0.10"               // Versión inicial
+                version = "1.0.12"               // Versión inicial
             }
         }
     }
