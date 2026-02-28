@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +24,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -103,12 +106,15 @@ data class GMDocumentGroupModel(
     val subGroups: List<GMDocumentSubGroupModel>
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GMDocumentList(
     groups: List<GMDocumentGroupModel>,
     isLoading: Boolean = false,
     isSelectionMode: Boolean = false,
     selectedIds: Set<Int> = emptySet(),
+    listState: LazyListState = rememberLazyListState(),
+
     onDocumentClick: (GMDocumentItemModel) -> Unit,
     onViewBoleta: (GMDocumentItemModel) -> Unit,
     onViewGre: (GMDocumentItemModel) -> Unit,
@@ -121,11 +127,17 @@ fun GMDocumentList(
         emptyStateContent()
     } else {
         LazyColumn(
-            modifier = modifier.fillMaxSize(),
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .animateContentSize (),
             contentPadding = PaddingValues(horizontal = 4.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(groups, key = { it.id }) { group ->
+            items(
+                items = groups,
+                key = { it.id }
+            ){ group ->
                 GMExpandableDocumentGroupCard(
                     group = group,
                     isSelectionMode = isSelectionMode,
@@ -134,7 +146,8 @@ fun GMDocumentList(
                     onViewBoleta = onViewBoleta,
                     onViewGre = onViewGre,
                     onToggleSelection = onToggleSelection,
-                    onToggleGroupSelection = onToggleGroupSelection
+                    onToggleGroupSelection = onToggleGroupSelection,
+                    modifier = Modifier.animateItemPlacement()
                 )
             }
         }
@@ -150,7 +163,8 @@ private fun GMExpandableDocumentGroupCard(
     onViewBoleta: (GMDocumentItemModel) -> Unit,
     onViewGre: (GMDocumentItemModel) -> Unit,
     onToggleSelection: (Int) -> Unit,
-    onToggleGroupSelection: (GMDocumentGroupModel, Boolean) -> Unit
+    onToggleGroupSelection: (GMDocumentGroupModel, Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(isSelectionMode) }
 
@@ -162,7 +176,7 @@ private fun GMExpandableDocumentGroupCard(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-        modifier = Modifier.animateContentSize()
+        modifier = modifier.animateContentSize()
     ) {
         Column {
             Row(
