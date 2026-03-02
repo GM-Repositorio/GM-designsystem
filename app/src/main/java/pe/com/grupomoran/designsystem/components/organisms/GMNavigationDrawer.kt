@@ -3,6 +3,8 @@ package pe.com.grupomoran.designsystem.components.organisms
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.Home
@@ -32,6 +35,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
@@ -46,6 +50,15 @@ import androidx.compose.ui.unit.dp
 import pe.com.grupomoran.designsystem.R
 import pe.com.grupomoran.designsystem.ui.theme.GMDesignSystemTheme
 import java.io.File
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 
 /**
  * Modelo para las opciones del menú lateral.
@@ -102,13 +115,20 @@ fun GMModalNavigationDrawer(
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
+
         modifier = modifier,
         gesturesEnabled = gesturesEnabled,
         drawerContent = {
             ModalDrawerSheet(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .width(300.dp),
+                    .width(300.dp)
+                    .clip(
+                        RoundedCornerShape(
+                            topEnd = 24.dp,
+                            bottomEnd = 24.dp
+                        )
+                    ),
                 drawerContainerColor = MaterialTheme.colorScheme.surface,
                 drawerContentColor = MaterialTheme.colorScheme.onSurface
             ) {
@@ -158,29 +178,83 @@ fun GMModalNavigationDrawer(
 fun GMDefaultDrawerHeader(
     title: String = "SISTEMA DE DISEÑO",
     subtitle: String = "Grupo Morán",
-    icon: Any = R.drawable.logojmv2
+    userName: String = "Usuario Invitado", // Nuevo parámetro para el nombre del usuario
+    icon: Any = R.drawable.logojmv2,
+    backgroundPattern: Any = R.drawable.bg_pattern_geometric
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp)
+            .height(200.dp) // Aumentamos un poco el alto para que quepa todo cómodamente
+            .background(Color.White)
     ) {
+        // 1. PATRÓN DINÁMICO DE FONDO
         Image(
-            painter = rememberGMIconPainter(icon),
+            painter = rememberGMIconPainter(backgroundPattern),
             contentDescription = null,
-            modifier = Modifier.height(48.dp)
+            modifier = Modifier
+                .size(240.dp)
+                .align(Alignment.TopEnd)
+                .offset(x = 40.dp, y = (-40).dp)
+                .alpha(0.15f),
+            contentScale = ContentScale.Fit
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.ExtraBold
-        )
-        Text(
-            text = subtitle,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+
+        // 2. CONTENIDO
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            // Logo
+            Image(
+                painter = rememberGMIconPainter(icon),
+                contentDescription = null,
+                modifier = Modifier.height(48.dp)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // NOMBRE DEL USUARIO (Resaltado)
+            Text(
+                text = userName.uppercase(),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            // Título del Sistema
+            Text(
+                text = title,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.ExtraBold
+            )
+
+            // Subtítulo / Empresa
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, widthDp = 300)
+@Composable
+fun GMDefaultDrawerHeaderPreview() {
+    MaterialTheme {
+        GMDefaultDrawerHeader(
+            userName = "JUAN ALBERTO PÉREZ",
+            title = "MÓDULO DE REPARTO",
+            subtitle = "Grupo Morán - Sede Sur",
+            // Aquí puedes usar tus recursos reales para ver el efecto
+            // icon = R.drawable.logojmv2,
+            // backgroundPattern = R.drawable.bg_pattern_geometric
         )
     }
 }
