@@ -158,20 +158,3 @@ fun BaseAdminConfigScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun BaseAdminConfigScreenPreview() {
-    GMDesignSystemTheme {
-        BaseAdminConfigScreen(
-            logoRes = R.drawable.logojmv2,
-            titleLine1 = "J. MORAN",
-            titleLine2 = "DISTRIBUCIONES",
-            subtitle = "Configuración de Administrador",
-            urlEditValue = "http://api.m4si.com:8080",
-            onUrlEditChange = {},
-            urlObtainedValue = "http://api.m4si.com:8080",
-            onSaveClick = {},
-            isSaveEnabled = true
-        )
-    }
-}

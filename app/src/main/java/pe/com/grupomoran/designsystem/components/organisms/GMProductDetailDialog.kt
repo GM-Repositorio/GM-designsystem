@@ -433,22 +433,3 @@ fun GMProductDetailDialog(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun GMProductDetailDialogPreview() {
-    GMDesignSystemTheme {
-        GMProductDetailDialog(
-            productName = "Product de Prueba",
-            totalQuantity = 600,
-            gre = "https://example.com/gre.pdf",
-            boleta = "https://example.com/boleta.pdf",
-            motivosRechazo = listOf(
-                GMMotivoRechazo(1, "Dañado", true),
-                GMMotivoRechazo(2, "Incorrecto", false)
-            ),
-            onDismiss = {},
-            onConfirm = { _, _, _, _ -> }
-        )
-    }
-}

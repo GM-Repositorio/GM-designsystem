@@ -243,18 +243,3 @@ fun GMDefaultDrawerHeader(
         }
     }
 }
-
-@Preview(showBackground = true, widthDp = 300)
-@Composable
-fun GMDefaultDrawerHeaderPreview() {
-    MaterialTheme {
-        GMDefaultDrawerHeader(
-            userName = "JUAN ALBERTO PÉREZ",
-            title = "MÓDULO DE REPARTO",
-            subtitle = "Grupo Morán - Sede Sur",
-            // Aquí puedes usar tus recursos reales para ver el efecto
-            // icon = R.drawable.logojmv2,
-            // backgroundPattern = R.drawable.bg_pattern_geometric
-        )
-    }
-}
