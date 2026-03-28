@@ -1,6 +1,5 @@
 package pe.com.grupomoran.designsystem.components.organisms
 
-import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,11 +14,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -28,9 +36,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import pe.com.grupomoran.designsystem.R
 
 @Composable
 fun BaseLoginScreen (
@@ -53,10 +63,14 @@ fun BaseLoginScreen (
     contentOverlay: @Composable () -> Unit = {}
 ){
     val focusManager = LocalFocusManager.current
-
-    Box(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)) {
+    var passwordVisible by remember { mutableStateOf(false) }
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 20.dp)) {
     Column(
-        modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter),
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.TopCenter),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(64.dp))
@@ -119,7 +133,7 @@ fun BaseLoginScreen (
             onValueChange = onPasswordChange,
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("Contraseña") },
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             enabled = !isLoading,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
@@ -130,6 +144,15 @@ fun BaseLoginScreen (
                     }
                 }
             ),
+            trailingIcon = {
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(
+                        imageVector = if (passwordVisible) Icons.Default.Visibility
+                        else Icons.Default.VisibilityOff,
+                        contentDescription = null
+                    )
+                }
+            },
             singleLine = true
         )
 
@@ -146,15 +169,41 @@ fun BaseLoginScreen (
 
     // FOOTER DINÁMICO
     Row(
-        modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter)
-            .navigationBarsPadding().padding(12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.BottomCenter)
+            .navigationBarsPadding()
+            .padding(12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = versionText, style = MaterialTheme.typography.bodySmall)
-        Text(text = deviceIdText, style = MaterialTheme.typography.bodySmall)
+        Text(text = versionText, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold )
+        Text(text = deviceIdText, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold )
     }
 
     // Aquí se mostrarán los diálogos que inyectes
     contentOverlay()
 }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BaseLoginScreenPreview() {
+    BaseLoginScreen(
+        logoRes = R.drawable.logojmv2, // Reemplaza con tu recurso de logo
+        titleLine1 = "GRUPO",
+        titleLine2 = "MORAN",
+        subtitle = "REPARTO",
+
+        usernameValue = "usuario_demo",
+        onUsernameChange = {},
+        passwordValue = "123456",
+        onPasswordChange = {},
+
+        isLoading = false,
+
+        versionText = "v1.0.0",
+        deviceIdText = "DEVICE12345",
+
+        onLoginClick = {}
+    )
 }
