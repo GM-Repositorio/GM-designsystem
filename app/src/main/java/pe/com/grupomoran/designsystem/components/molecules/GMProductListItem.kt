@@ -58,7 +58,7 @@ fun GMProductListItem(
         leadingContent = {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(35.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
                     .border(0.5.dp, Color.LightGray.copy(alpha = 0.5f), RoundedCornerShape(8.dp)),
@@ -80,7 +80,7 @@ fun GMProductListItem(
                 ) {
                     Text(
                         text = "S/ ${"%.2f".format(price)}",
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.primary
                     )
